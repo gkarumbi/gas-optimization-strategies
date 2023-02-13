@@ -47,7 +47,7 @@ The loop() function in Test1 costs more than 31K gas, whereas the loop() functio
 - [ ] **Inline Internal Functions Called Once**
 In Solidity, internal functions are functions that can only be called from within the contract. If you have an internal function that is called only once, you can inline it to save gas. This is because inlining eliminates the overhead of calling a separate function, thus reducing the gas consumption.
 
-- [ ] **Using *private* rather than public for *constants* saves gas - *Ex. uint256 public constant BIPS_ONE = 1e4;* **
+- [ ] **Using *private* rather than public for *constants* saves gas - *Ex. uint256 public constant BIPS_ONE = 1e4;***
 
 - [ ] **Use `calldata` instead of `memory` for function parameters  -** 
 Mark data types as `calldata` instead of `memory` where possible. This makes it so that the data is not automatically loaded into memory. If the data passed into the function does not need to be changed (like updating values in an array), it can be passed in as `calldata`
