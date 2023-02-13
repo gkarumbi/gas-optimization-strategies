@@ -47,4 +47,45 @@ The loop() function in Test1 costs more than 31K gas, whereas the loop() functio
 - [ ] **Inline Internal Functions Called Once**
 In Solidity, internal functions are functions that can only be called from within the contract. If you have an internal function that is called only once, you can inline it to save gas. This is because inlining eliminates the overhead of calling a separate function, thus reducing the gas consumption.
 
-In conclusion, these four strategies can help you optimize gas usage in your smart contract. Implementing these strategies during the development and auditing process can help ensure that your smart contract operates efficiently and avoids potential gas costs issues.
+- [ ] **Using *private* rather than public for *constants* saves gas - *Ex. uint256 public constant BIPS_ONE = 1e4;* **
+
+- [ ] **Use `calldata` instead of `memory` for function parameters  -** 
+Mark data types as `calldata` instead of `memory` where possible. This makes it so that the data is not automatically loaded into memory. If the data passed into the function does not need to be changed (like updating values in an array), it can be passed in as `calldata`
+
+Ex 1: 
+
+```
+contract C {
+    function add(uint[] memory arr) external returns (uint sum) {
+        uint length = arr.length;
+        for (uint i = 0; i < arr.length; i++) {
+            sum += arr[i];
+        }
+    }
+}
+```
+
+```
+contract C {
+    function add(uint[] calldata arr) external returns (uint sum) {
+        uint length = arr.length;
+        for (uint i = 0; i < arr.length; i++) {
+            sum += arr[i];
+        }
+    }
+}
+```
+
+NB// The values in the array are not being changes they are just being used to return a sum
+
+Ex. 2:
+
+```solidity
+function auctionID(Auction memory auction) external pure returns (uint256);
+```
+
+```solidity
+function auctionID(Auction calldata auction) external pure returns (uint256);
+```
+
+NB// This code does not change the function parameters rather it changes something
